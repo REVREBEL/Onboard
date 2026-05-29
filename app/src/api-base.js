@@ -1,4 +1,4 @@
-export const resolveApiBase = () => {
+const resolveApiBase = () => {
   if (window.__API_BASE__) {
     return window.__API_BASE__.replace(/\/$/, "");
   }
@@ -9,10 +9,10 @@ export const resolveApiBase = () => {
 
   const origin = window.location?.origin;
   if (origin && origin !== "null") {
-    return origin.replace(/\/$/, "") + "/api";
+    return `${origin.replace(/\/$/, "")}/api`;
   }
 
   return "http://127.0.0.1:4010/api";
 };
 
-export const apiBase = resolveApiBase();
+const apiBase = resolveApiBase();
