@@ -12,6 +12,14 @@ import multer from "multer";
 import rateLimit from "express-rate-limit";
 import { google } from "googleapis";
 import { pool } from "./db.js";
+import app from "./app.js";
+
+const PORT = process.env.PORT || 4010;
+
+app.listen(PORT, () => {
+  console.log(`API listening on port ${PORT}`);
+});
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,6 +37,7 @@ const PMS_INSTRUCTION = {
   opera: "Opera-specific setup note: include your active Opera interfaces and daily export workflow details.",
   stayntouch: "StayNTouch-specific setup note: include active integrations and PMS permission roles used by your team."
 };
+
 
 const app = express();
 const PORT = process.env.PORT || 4010;
