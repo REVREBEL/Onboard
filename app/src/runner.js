@@ -6,16 +6,23 @@ import { Question, Serializer } from "survey-core";
 
 const resolveApiBase = () => {
   if (window.__API_BASE__) {
-    return window.__API_BASE__;
+    return window.__API_BASE__.replace(/\/$/, "");
   }
-  const origin = window.location && window.location.origin;
+
+  if (import.meta.env.VITE_API_BASE) {
+    return import.meta.env.VITE_API_BASE.replace(/\/$/, "");
+  }
+
+  const origin = window.location?.origin;
   if (origin && origin !== "null") {
     return `${origin.replace(/\/$/, "")}/api`;
   }
-  return "http://127.0.0.1:4010";
+
+  return "http://127.0.0.1:4010/api";
 };
 
 const apiBase = resolveApiBase();
+
 const pageBreakType = "pagebreak";
 const bootQuery = new URLSearchParams(window.location.search);
 const warningDebugEnabled = bootQuery.get("debugWarnings") === "1"
