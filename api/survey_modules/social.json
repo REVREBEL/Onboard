@@ -1,0 +1,27 @@
+{
+  "pages": [
+    {
+      "name": "social_strategy",
+      "title": "Social Strategy",
+      "elements": [
+        {
+          "type": "checkbox",
+          "name": "social_platforms",
+          "title": "Which social platforms are actively managed?",
+          "choices": [
+            "Instagram",
+            "Facebook",
+            "TikTok",
+            "LinkedIn",
+            "YouTube"
+          ]
+        },
+        {
+          "type": "comment",
+          "name": "social_goals",
+          "title": "What are your current social goals?"
+        }
+      ]
+    }
+  ]
+}

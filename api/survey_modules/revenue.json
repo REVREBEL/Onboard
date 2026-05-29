@@ -1,0 +1,31 @@
+{
+  "pages": [
+    {
+      "name": "revenue_setup",
+      "title": "Revenue Management Setup",
+      "elements": [
+        {
+          "type": "comment",
+          "name": "revenue_goals",
+          "title": "Describe your current revenue management goals.",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "forecast_horizon_days",
+          "title": "How many days ahead do you forecast demand?",
+          "inputType": "number",
+          "isRequired": true
+        },
+        {
+          "type": "file",
+          "name": "revenue_reports",
+          "title": "Upload any recent revenue reports.",
+          "storeDataAsText": false,
+          "allowMultiple": true,
+          "waitForUpload": true
+        }
+      ]
+    }
+  ]
+}

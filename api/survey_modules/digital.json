@@ -1,0 +1,21 @@
+{
+  "pages": [
+    {
+      "name": "digital_presence",
+      "title": "Digital Presence",
+      "elements": [
+        {
+          "type": "text",
+          "name": "booking_engine_url",
+          "title": "Primary booking engine URL",
+          "isRequired": true
+        },
+        {
+          "type": "comment",
+          "name": "digital_kpis",
+          "title": "What are your top digital KPIs?"
+        }
+      ]
+    }
+  ]
+}

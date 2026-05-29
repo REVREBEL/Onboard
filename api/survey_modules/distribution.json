@@ -1,0 +1,28 @@
+{
+  "pages": [
+    {
+      "name": "distribution_channels",
+      "title": "Distribution & Channel Mix",
+      "elements": [
+        {
+          "type": "checkbox",
+          "name": "core_channels",
+          "title": "Which channels are active today?",
+          "isRequired": true,
+          "choices": [
+            "Brand Website",
+            "OTA",
+            "GDS",
+            "Wholesale",
+            "Meta Search"
+          ]
+        },
+        {
+          "type": "comment",
+          "name": "distribution_constraints",
+          "title": "List the biggest distribution constraints."
+        }
+      ]
+    }
+  ]
+}

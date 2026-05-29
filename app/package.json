@@ -1,0 +1,21 @@
+{
+  "name": "surveyjs-offline-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "survey-analytics": "^1.11.9",
+    "survey-core": "^1.11.9",
+    "survey-creator-core": "^1.11.9",
+    "survey-creator-knockout": "^1.12.56",
+    "survey-pdf": "^1.11.9"
+  },
+  "devDependencies": {
+    "playwright": "^1.58.2",
+    "vite": "^5.4.0"
+  }
+}
