@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "npm --prefix app run build",
+    "db:schema": "npm --prefix api run db:schema",
     "start": "npm --prefix api start",
     "postinstall": "npm --prefix api install && npm --prefix app install"
   }

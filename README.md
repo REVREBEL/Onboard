@@ -38,6 +38,22 @@
 
 * <!-- ... [SHOW HOW YOUR PROJECT IS INSTALLED] -->
 
+## **DATABASE SETUP**
+
+The API expects a Postgres database with the tables in `sql/schema.sql`.
+
+1. Set `DATABASE_URL` in Vercel to the real Postgres connection string for the
+   Production and Preview environments that should run the API.
+2. Apply the schema once against that database:
+
+   ```bash
+   DATABASE_URL="postgres://..." npm run db:schema
+   ```
+
+No seed data is required for the default onboarding flow. The app can compose a
+new onboarding survey from `api/survey_modules/*.json`; saved surveys and
+themes can be added later through the Creator/Admin UI.
+
 
 
 ## **USAGE**

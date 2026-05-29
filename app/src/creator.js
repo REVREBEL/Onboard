@@ -11,6 +11,14 @@ const pageBreakType = "pagebreak";
 const scopeChoices = ["all", "default", "revenue", "distribution", "digital", "social"];
 let fontsInitialized = false;
 
+const normalizeConfiguredApiBase = (url) => {
+  const normalizedPath = url.pathname.replace(/\/$/, "");
+  if (!normalizedPath || normalizedPath === "/") {
+    url.pathname = "/api";
+  }
+  return url.toString().replace(/\/$/, "");
+};
+
 const customThemeFonts = [
   { fontPath: "fontbase64_robotomonoregular", fontFamily: "RobotoMono-Regular" },
   { fontPath: "fontbase64_robotomonoitalic", fontFamily: "RobotoMono-Italic" }
@@ -60,11 +68,26 @@ const resolveApiBase = () => {
     return window.__API_BASE__.replace(/\/$/, "");
   }
 
-  if (import.meta.env.VITE_API_BASE) {
-    return import.meta.env.VITE_API_BASE.replace(/\/$/, "");
+  const origin = window.location?.origin;
+  const pageHost = window.location?.hostname;
+  const configuredApiBase = import.meta.env.VITE_API_BASE;
+
+  if (configuredApiBase) {
+    const trimmedApiBase = configuredApiBase.replace(/\/$/, "");
+    try {
+      const configuredUrl = new URL(trimmedApiBase, origin || undefined);
+      const configuredHost = configuredUrl.hostname;
+      const isLocalApiHost = ["localhost", "127.0.0.1", "::1"].includes(configuredHost);
+      const isLocalPageHost = ["localhost", "127.0.0.1", "::1"].includes(pageHost);
+
+      if (!isLocalApiHost || isLocalPageHost) {
+        return normalizeConfiguredApiBase(configuredUrl);
+      }
+    } catch {
+      return trimmedApiBase;
+    }
   }
 
-  const origin = window.location?.origin;
   if (origin && origin !== "null") {
     return `${origin.replace(/\/$/, "")}/api`;
   }
