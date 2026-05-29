@@ -301,6 +301,35 @@ const applyWebsiteCmsAccessLogic = (pages) => {
   return nextPages;
 };
 
+const applyDriveUploadConfig = (pages) => {
+  const walkElements = (elements) => {
+    if (!Array.isArray(elements)) return;
+
+    elements.forEach((element) => {
+      if (!element || typeof element !== "object") return;
+
+      if (String(element.type || "").toLowerCase() === "file") {
+        element.storeDataAsText = false;
+        element.waitForUpload = true;
+        if (element.allowMultiple === undefined) {
+          element.allowMultiple = true;
+        }
+      }
+
+      walkElements(element.elements);
+      walkElements(element.templateElements);
+
+      if (Array.isArray(element.rows)) {
+        element.rows.forEach((row) => walkElements(row?.elements));
+      }
+    });
+  };
+
+  const nextPages = Array.isArray(pages) ? pages : [];
+  nextPages.forEach((page) => walkElements(page?.elements));
+  return nextPages;
+};
+
 const composeSurveyJson = async ({
   hotel_name,
   pms_system,
@@ -318,10 +347,10 @@ const composeSurveyJson = async ({
 
   const modules = await Promise.all([...activeScopes].map((key) => loadModuleByKey(key)));
   const rawPages = modules.flatMap((mod) => (Array.isArray(mod.pages) ? mod.pages : []));
-  const pages = applyWebsiteCmsAccessLogic(applyPmsInstruction(
+  const pages = applyDriveUploadConfig(applyWebsiteCmsAccessLogic(applyPmsInstruction(
     ensureSurveyPages(filterSurveyPagesByScope(rawPages, activeScopes)),
     pms_system
-  ));
+  )));
 
   return {
     title: `REVREBEL Onboarding - ${hotel_name || "Client"}`,
@@ -352,7 +381,7 @@ const buildScopedSurveyFromTemplate = ({
   });
 
   const scopedPages = filterSurveyPagesByScope(sourceSurveyJson.pages, activeScopes);
-  const finalPages = applyWebsiteCmsAccessLogic(applyPmsInstruction(ensureSurveyPages(scopedPages), pms_system));
+  const finalPages = applyDriveUploadConfig(applyWebsiteCmsAccessLogic(applyPmsInstruction(ensureSurveyPages(scopedPages), pms_system)));
 
   const sourceMeta = sourceSurveyJson.__meta && typeof sourceSurveyJson.__meta === "object"
     ? sourceSurveyJson.__meta

@@ -457,6 +457,13 @@ const injectDriveFolderLinksIntoElements = (elements, folderId, folderUrl) => {
     const isFileUpload = String(nextElement.type || "").toLowerCase() === "file";
     const uploadName = String(nextElement.name || "").trim();
     const linkName = uploadName ? `${uploadName}_drive_folder_link` : "";
+    if (isFileUpload) {
+      nextElement.storeDataAsText = false;
+      nextElement.waitForUpload = true;
+      if (nextElement.allowMultiple === undefined) {
+        nextElement.allowMultiple = true;
+      }
+    }
     if (isFileUpload && linkName && !existingNames.has(linkName)) {
       existingNames.add(linkName);
       nextElements.push({
