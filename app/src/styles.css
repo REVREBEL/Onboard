@@ -2670,4 +2670,6 @@ body.stats-embed-mode .stats-bar {
   font-weight: var(--label-font-weight);
 }
 
-header__title
+.svc-creator__non-commercial-text {
+  display: none;
+}
