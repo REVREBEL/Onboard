@@ -18,6 +18,18 @@ const requiresRelaxedSsl = (connectionString) => {
   }
 };
 
+const normalizeConnectionString = (connectionString) => {
+  if (!connectionString || isVaultPlaceholder(connectionString)) return connectionString;
+
+  try {
+    const url = new URL(connectionString);
+    url.searchParams.delete("sslmode");
+    return url.toString();
+  } catch {
+    return connectionString;
+  }
+};
+
 const connectionConfig = {
   host: process.env.PGHOST,
   port: process.env.PGPORT,
@@ -29,10 +41,10 @@ const connectionConfig = {
 };
 
 if (process.env.DATABASE_URL && !isVaultPlaceholder(process.env.DATABASE_URL)) {
-  connectionConfig.connectionString = process.env.DATABASE_URL;
+  connectionConfig.connectionString = normalizeConnectionString(process.env.DATABASE_URL);
 }
 
-if (requiresRelaxedSsl(connectionConfig.connectionString)) {
+if (requiresRelaxedSsl(process.env.DATABASE_URL)) {
   connectionConfig.ssl = { rejectUnauthorized: false };
 }
 
