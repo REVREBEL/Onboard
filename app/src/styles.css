@@ -2661,3 +2661,11 @@ body.stats-embed-mode .stats-bar {
     grid-template-columns: 1fr;
   }
 }
+
+
+.sd-progress-buttons__page-title {
+  color: var(--primary);
+  text-transform: uppercase;
+  font-family: var(--font-headline);
+  font-weight: var(--label-font-weight);
+}
