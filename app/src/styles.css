@@ -2670,9 +2670,6 @@ body.stats-embed-mode .stats-bar {
   font-weight: var(--label-font-weight);
 }
 
-.svc-creator__non-commercial-text {
-  display: none !important;
-}
 
 
 .sv-header__title {
@@ -2690,4 +2687,19 @@ body.stats-embed-mode .stats-bar {
   grid-auto-columns: 3fr 1fr 1fr;
   grid-auto-rows: 1fr 1fr 1fr;
   grid-auto-flow: dense;
+}
+
+.svc-creator__non-commercial-text {
+  --thm-default-font-size: var(--sjs-font-size, calc(2 * var(--sjs-base-unit, var(--base-unit, 8px))));
+  --thm-default-line-height: calc(1.5 * var(--thm-default-font-size));
+  font-family: var(--ctr-font-family, var(--sjs-font-family, var(--font-family)));
+  font-size: var(--ctr-font-default-size, var(--thm-default-font-size, 16px));
+  font-style: normal;
+  font-weight: 400;
+  line-height: var(--ctr-font-default-line-height, var(--thm-default-line-height, 24px));
+  font-weight: 600;
+  color: var(--ctr-page-banner-text-color, var(--sjs-primary-forecolor, var(--primary-foreground, #fff)));
+  vertical-align: middle;
+  padding: calc(1.5 * (var(--sjs-base-unit, var(--base-unit, 8px)))) calc(16 * (var(--sjs-base-unit, var(--base-unit, 8px))));
+  display: none !important;
 }
