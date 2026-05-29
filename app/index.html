@@ -1,20 +1,181 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>SurveyJS (Offline)</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/REVREBEL/fonts@main/rebel-fonts.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/REVREBEL/fonts@main/rebel-fonts.css">
-    <style>body{font:16px/1.4 system-ui, sans-serif; padding:24px;}</style>
-  </head>
-  <body>
-    <h1>REVREBEL SurveyJS System</h1>
-    <ul>
-      <li><a href="/admin.html">Onboarding Admin</a></li>
-      <li><a href="/creator.html">Survey Creator</a></li>
-      <li><a href="/runner.html">Survey Runner</a></li>
-    </ul>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>SurveyJS System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link
+    rel="preload"
+    as="style"
+    href="https://cdn.jsdelivr.net/gh/REVREBEL/fonts@main/rebel-fonts.css"
+    type="text/css"
+  >
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/REVREBEL/fonts@main/rebel-fonts.css"
+  >
+
+  <style>
+    :root {
+      --primary: #163666;
+      --primary-inverse: #b2d3de;
+      --light-1: #fafafa;
+      --color-1: #047c97;
+      --color-7: #e05047;
+
+      --font-base: 'General Sans', Tahoma, system-ui, sans-serif;
+      --font-headline: 'Khand', Oswald, Impact, sans-serif;
+
+      --h1-font-size: clamp(4rem, 10vw, 10.75rem);
+      --h1-font-weight: 700;
+      --h1-letter-spacing: -0.01em;
+      --h1-line-height: 0.8;
+
+      --btn-font: var(--font-headline);
+      --btn-font-size: 1.1rem;
+      --btn-font-weight: 700;
+      --btn-letter-spacing: 0.05em;
+      --btn-line-height: 1;
+      --btn-padding: 1.25rem 1.15rem;
+      --btn-border-radius: 0.1em;
+
+      --gap-base: 1rem;
+      --transition: 200ms cubic-bezier(.2, .6, .2, 1);
+      --shadow-sm: 0 1px 2px rgb(0 0 0 / 6%);
+      --shadow-md: 0 4px 10px rgb(0 0 0 / 8%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: clamp(2rem, 5vw, 4rem);
+      background: var(--light-1);
+      color: var(--primary);
+      font-family: var(--font-base);
+    }
+
+    .survey-home {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .survey-home__header {
+      margin-bottom: 2rem;
+    }
+
+    .survey-home__title {
+      margin: 0;
+      color: var(--primary);
+      font-family: var(--font-headline);
+      font-size: var(--h1-font-size);
+      font-weight: var(--h1-font-weight);
+      letter-spacing: var(--h1-letter-spacing);
+      line-height: var(--h1-line-height);
+      text-transform: uppercase;
+      text-wrap: balance;
+    }
+
+    .survey-home__buttons {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--gap-base);
+      margin-top: 2rem;
+    }
+
+    .survey-home__button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 72px;
+      padding: var(--btn-padding);
+      border: 4px solid var(--primary);
+      border-radius: var(--btn-border-radius);
+      background: transparent;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+      font-family: var(--btn-font);
+      font-size: var(--btn-font-size);
+      font-weight: var(--btn-font-weight);
+      letter-spacing: var(--btn-letter-spacing);
+      line-height: var(--btn-line-height);
+      text-align: center;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition:
+        background var(--transition),
+        color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition);
+    }
+
+    .survey-home__button:hover,
+    .survey-home__button:focus-visible {
+      background: var(--primary);
+      color: var(--primary-inverse);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .survey-home__button--accent {
+      border-color: var(--color-1);
+      color: var(--color-1);
+    }
+
+    .survey-home__button--accent:hover,
+    .survey-home__button--accent:focus-visible {
+      background: var(--color-1);
+      color: var(--light-1);
+    }
+
+    .survey-home__button--alert {
+      border-color: var(--color-7);
+      color: var(--color-7);
+    }
+
+    .survey-home__button--alert:hover,
+    .survey-home__button--alert:focus-visible {
+      background: var(--color-7);
+      color: var(--light-1);
+    }
+
+    @media (max-width: 760px) {
+      .survey-home__buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .survey-home__button {
+        min-height: 64px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="survey-home">
+    <header class="survey-home__header">
+      <h1 class="survey-home__title">REVREBEL SurveyJS System</h1>
+    </header>
+
+    <nav class="survey-home__buttons" aria-label="SurveyJS system links">
+      <a class="survey-home__button" href="/admin.html">
+        Onboarding Admin
+      </a>
+
+      <a class="survey-home__button survey-home__button--accent" href="/creator.html">
+        Survey Creator
+      </a>
+
+      <a class="survey-home__button survey-home__button--alert" href="/runner.html">
+        Survey Runner
+      </a>
+    </nav>
+  </main>
+</body>
 </html>
