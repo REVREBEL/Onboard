@@ -1,14 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
+    "api/[...path].js": {
+      "includeFiles": "survey_modules/**"
+    },
     "api/index.js": {
       "includeFiles": "survey_modules/**"
     }
-  },
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/index.js"
-    }
-  ]
+  }
 }
