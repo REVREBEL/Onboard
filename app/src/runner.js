@@ -687,8 +687,10 @@ const setKnownVariables = (model, clientData) => {
     location: ["location", "hotel_location", "hotelLocation", "city"],
     pms_system: ["pms_system", "pmsSystem", "pms"],
     crs_system: ["crs_system", "crsSystem", "crs"],
+    sales_catering_system: ["sales_catering_system", "salesCateringSystem", "s_c_system", "sc_system", "s+c_system"],
     rate_shopping_tool: ["rate_shopping_tool", "rateShoppingTool", "rate_shopping", "rateShopping"],
     rms_system: ["rms_system", "rmsSystem", "rms"],
+    website_cms: ["website_cms", "websiteCms", "cms"],
     google_drive_folder_id: ["google_drive_folder_id", "googleDriveFolderId", "drive_folder_id", "driveFolderId"],
     google_drive_folder_url: ["google_drive_folder_url", "googleDriveFolderUrl", "drive_folder_url", "driveFolderUrl"]
   };
@@ -715,8 +717,12 @@ const setKnownVariables = (model, clientData) => {
     location: clientData.location,
     pmssystem: clientData.pms_system,
     crssystem: clientData.crs_system,
+    salescateringsystem: clientData.sales_catering_system,
+    scsystem: clientData.sales_catering_system,
     rateshoppingtool: clientData.rate_shopping_tool,
     rmssystem: clientData.rms_system,
+    websitecms: clientData.website_cms,
+    cms: clientData.website_cms,
     googledrivefolderid: clientData.google_drive_folder_id,
     googledrivefolderurl: clientData.google_drive_folder_url
   };

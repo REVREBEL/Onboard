@@ -57,6 +57,16 @@ const defaultGoogleDriveFolderId = process.env.DEFAULT_GOOGLE_DRIVE_FOLDER_ID ||
 
 const ensureRuntimeSchema = async () => {
   await pool.query(`
+    ALTER TABLE surveyjs.clients
+    ADD COLUMN IF NOT EXISTS sales_catering_system TEXT
+  `);
+
+  await pool.query(`
+    ALTER TABLE surveyjs.clients
+    ADD COLUMN IF NOT EXISTS website_cms TEXT
+  `);
+
+  await pool.query(`
     ALTER TABLE surveyjs.onboarding_instances
     ADD COLUMN IF NOT EXISTS source_survey_slug TEXT
   `);
@@ -262,6 +272,35 @@ const applyPmsInstruction = (pages, pms_system) => {
   return nextPages;
 };
 
+const applyWebsiteCmsAccessLogic = (pages) => {
+  const walkElements = (elements) => {
+    if (!Array.isArray(elements)) return;
+
+    elements.forEach((element) => {
+      if (!element || typeof element !== "object") return;
+
+      if (element.name === "webflow_access") {
+        element.visibleIf = "{website_cms} = 'Webflow'";
+      }
+
+      if (element.name === "website_cms_access") {
+        element.visibleIf = "{website_cms} <> 'Webflow'";
+      }
+
+      walkElements(element.elements);
+      walkElements(element.templateElements);
+
+      if (Array.isArray(element.rows)) {
+        element.rows.forEach((row) => walkElements(row?.elements));
+      }
+    });
+  };
+
+  const nextPages = Array.isArray(pages) ? pages : [];
+  nextPages.forEach((page) => walkElements(page?.elements));
+  return nextPages;
+};
+
 const composeSurveyJson = async ({
   hotel_name,
   pms_system,
@@ -279,10 +318,10 @@ const composeSurveyJson = async ({
 
   const modules = await Promise.all([...activeScopes].map((key) => loadModuleByKey(key)));
   const rawPages = modules.flatMap((mod) => (Array.isArray(mod.pages) ? mod.pages : []));
-  const pages = applyPmsInstruction(
+  const pages = applyWebsiteCmsAccessLogic(applyPmsInstruction(
     ensureSurveyPages(filterSurveyPagesByScope(rawPages, activeScopes)),
     pms_system
-  );
+  ));
 
   return {
     title: `REVREBEL Onboarding - ${hotel_name || "Client"}`,
@@ -313,7 +352,7 @@ const buildScopedSurveyFromTemplate = ({
   });
 
   const scopedPages = filterSurveyPagesByScope(sourceSurveyJson.pages, activeScopes);
-  const finalPages = applyPmsInstruction(ensureSurveyPages(scopedPages), pms_system);
+  const finalPages = applyWebsiteCmsAccessLogic(applyPmsInstruction(ensureSurveyPages(scopedPages), pms_system));
 
   const sourceMeta = sourceSurveyJson.__meta && typeof sourceSurveyJson.__meta === "object"
     ? sourceSurveyJson.__meta
@@ -420,8 +459,10 @@ const onboardingByTokenQuery = `
     c.location,
     c.pms_system,
     c.crs_system,
+    c.sales_catering_system,
     c.rate_shopping_tool,
     c.rms_system,
+    c.website_cms,
     c.google_drive_folder_id,
     s.json_schema
   FROM surveyjs.onboarding_instances oi
@@ -694,8 +735,10 @@ app.post("/api/onboarding", async (req, res) => {
     location,
     pms_system,
     crs_system,
+    sales_catering_system,
     rate_shopping_tool,
     rms_system,
+    website_cms,
     google_drive_folder_id,
     survey_slug,
     scope_revenue = false,
@@ -732,16 +775,18 @@ app.post("/api/onboarding", async (req, res) => {
 
     const clientInsert = await pool.query(
       `INSERT INTO surveyjs.clients
-       (hotel_name, location, pms_system, crs_system, rate_shopping_tool, rms_system, google_drive_folder_id)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)
+       (hotel_name, location, pms_system, crs_system, sales_catering_system, rate_shopping_tool, rms_system, website_cms, google_drive_folder_id)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
        RETURNING *`,
       [
         hotel_name,
         location || null,
         pms_system || null,
         crs_system || null,
+        sales_catering_system || null,
         rate_shopping_tool || null,
         rms_system || null,
+        website_cms || null,
         resolvedGoogleDriveFolderId
       ]
     );
@@ -853,8 +898,10 @@ app.get("/api/onboarding/:token", async (req, res) => {
         location: record.location,
         pms_system: record.pms_system,
         crs_system: record.crs_system,
+        sales_catering_system: record.sales_catering_system,
         rate_shopping_tool: record.rate_shopping_tool,
         rms_system: record.rms_system,
+        website_cms: record.website_cms,
         google_drive_folder_id: folderId,
         google_drive_folder_url: folderUrl
       },
@@ -1053,6 +1100,8 @@ app.get("/api/onboarding/admin/instances", async (req, res) => {
           oi.updated_at,
           oi.expires_at,
           c.hotel_name,
+          c.sales_catering_system,
+          c.website_cms,
           c.location
        FROM surveyjs.onboarding_instances oi
        JOIN surveyjs.clients c ON c.id = oi.client_id
@@ -1088,6 +1137,8 @@ app.post("/api/onboarding/admin/instances/:token/sync", async (req, res) => {
           oi.completion_percent,
           c.hotel_name,
           c.pms_system,
+          c.sales_catering_system,
+          c.website_cms,
           s.title AS snapshot_title,
           s.json_schema AS snapshot_json
        FROM surveyjs.onboarding_instances oi

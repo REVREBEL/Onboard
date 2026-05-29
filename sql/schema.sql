@@ -36,8 +36,10 @@ CREATE TABLE IF NOT EXISTS surveyjs.clients (
   location                TEXT,
   pms_system              TEXT,
   crs_system              TEXT,
+  sales_catering_system   TEXT,
   rate_shopping_tool      TEXT,
   rms_system              TEXT,
+  website_cms             TEXT,
   google_drive_folder_id  TEXT,
   created_at              TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at              TIMESTAMPTZ NOT NULL DEFAULT now()
