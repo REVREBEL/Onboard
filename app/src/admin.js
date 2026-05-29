@@ -19,8 +19,6 @@ const resolveApiBase = () => {
 
 const apiBase = resolveApiBase();
 
-
-const apiBase = resolveApiBase();
 const pageOrigin = window.location?.origin?.replace(/\/$/, "") || "";
 
 const onboardingForm = document.getElementById("onboardingForm");
