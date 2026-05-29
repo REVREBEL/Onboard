@@ -39,6 +39,10 @@ app.use(helmet());
 app.use(cors({ origin: true }));
 app.use(express.json({ limit: "10mb" }));
 app.use(morgan("combined"));
+app.use("/api", (req, res, next) => {
+  res.set("Cache-Control", "no-store");
+  next();
+});
 
 const onboardingLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,

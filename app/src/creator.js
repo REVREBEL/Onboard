@@ -117,6 +117,11 @@ const reportBootError = (label, error) => {
   panel.textContent = message;
 };
 
+const clearBootError = () => {
+  const panel = document.getElementById("creatorBootError");
+  if (panel) panel.remove();
+};
+
 const safeRun = (label, fn) => {
   try {
     return fn();
@@ -282,6 +287,7 @@ const initCreator = () => {
         option.textContent = `${item.title || item.slug} (${item.slug})`;
         surveyList.appendChild(option);
       });
+      clearBootError();
     } catch (error) {
       reportBootError("refresh survey list", error);
     } finally {
@@ -303,6 +309,7 @@ const initCreator = () => {
         option.textContent = item.name;
         themeList.appendChild(option);
       });
+      clearBootError();
     } catch (error) {
       reportBootError("refresh theme list", error);
     } finally {
