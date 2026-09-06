@@ -41,12 +41,17 @@ export default defineConfig(({ mode, isSsrBuild }) => {
     };
   }
 
-  return {
+return {
     root: ".",
+    define: {
+      "import.meta.env.VITE_INDEX_ACCESS_CODE": JSON.stringify(accessCode),
+      "process.env.VITE_INDEX_ACCESS_CODE": JSON.stringify(accessCode)
+    },
     environments: {
       client: {
         build: {
           outDir: "dist/client",
+          emptyOutDir: false,
           rollupOptions: {
             input: {
               main: resolve(import.meta.dirname, "index.html"),
