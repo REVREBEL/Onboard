@@ -43,16 +43,20 @@ export default defineConfig(({ mode, isSsrBuild }) => {
 
   return {
     root: ".",
-    build: {
-      outDir: "dist",
-      emptyOutDir: true,
-      rollupOptions: {
-        input: {
-          main: resolve(__dirname, "index.html"),
-          creator: resolve(__dirname, "src/creator.html"),
-          runner: resolve(__dirname, "src/runner.html"),
-          admin: resolve(__dirname, "src/admin.html"),
-          stats: resolve(__dirname, "src/stats.html")
+    environments: {
+      client: {
+        build: {
+          outDir: "dist",
+          emptyOutDir: true,
+          rollupOptions: {
+            input: {
+              main: resolve(__dirname, "index.html"),
+              creator: resolve(__dirname, "src/creator.html"),
+              runner: resolve(__dirname, "src/runner.html"),
+              admin: resolve(__dirname, "src/admin.html"),
+              stats: resolve(__dirname, "src/stats.html")
+            }
+          }
         }
       }
     },
