@@ -35,7 +35,7 @@ export default defineConfig(({ mode, isSsrBuild }) => {
       root: "./",
       build: {
         rollupOptions: {
-          input: resolve(__dirname, "src/worker.ts")
+          input: resolve(import.meta.dirname, "src/worker.ts")
         }
       }
     };
@@ -50,11 +50,11 @@ export default defineConfig(({ mode, isSsrBuild }) => {
           emptyOutDir: false,
           rollupOptions: {
             input: {
-              main: resolve(__dirname, "index.html"),
-              creator: resolve(__dirname, "src/creator.html"),
-              runner: resolve(__dirname, "src/runner.html"),
-              admin: resolve(__dirname, "src/admin.html"),
-              stats: resolve(__dirname, "src/stats.html")
+              main: resolve(import.meta.dirname, "index.html"),
+              creator: resolve(import.meta.dirname, "src/creator.html"),
+              runner: resolve(import.meta.dirname, "src/runner.html"),
+              admin: resolve(import.meta.dirname, "src/admin.html"),
+              stats: resolve(import.meta.dirname, "src/stats.html")
             }
           }
         }
