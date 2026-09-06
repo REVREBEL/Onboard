@@ -39,6 +39,7 @@ The application currently supports onboarding workflows for:
 - Social Media
 
 <br>
+
 ---
 
 ## THE PROJECT
