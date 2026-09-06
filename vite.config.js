@@ -28,8 +28,6 @@ export default defineConfig(({ mode, isSsrBuild }) => {
     throw new Error("Missing required environment variable: VITE_INDEX_ACCESS_CODE");
   }
 
-  console.log("[Onboard] VITE_INDEX_ACCESS_CODE detected for this build.");
-
   if (isSsrBuild) {
     return {
       root: "./",
@@ -45,10 +43,6 @@ export default defineConfig(({ mode, isSsrBuild }) => {
     root: ".",
     environments: {
       client: {
-        define: {
-          "import.meta.env.VITE_INDEX_ACCESS_CODE": JSON.stringify(accessCode),
-          "process.env.VITE_INDEX_ACCESS_CODE": JSON.stringify(accessCode)
-        },
         build: {
           outDir: "dist/client",
           emptyOutDir: false,
