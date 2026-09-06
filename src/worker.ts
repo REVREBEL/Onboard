@@ -13,10 +13,6 @@ export default {
       const activeCode = fromEnv || fromProcess;
 
       return Response.json({
-        hasEnvBinding: Boolean(fromEnv),
-        envLength: fromEnv ? fromEnv.length : 0,
-        hasProcessEnv: Boolean(fromProcess),
-        processEnvLength: fromProcess ? fromProcess.length : 0,
         isConfigured: Boolean(activeCode),
         activeLength: activeCode ? activeCode.length : 0,
         receivedPath: url.pathname
