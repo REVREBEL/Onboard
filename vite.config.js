@@ -47,7 +47,7 @@ export default defineConfig(({ mode, isSsrBuild }) => {
       client: {
         build: {
           outDir: "dist",
-          emptyOutDir: true,
+          emptyOutDir: false,
           rollupOptions: {
             input: {
               main: resolve(__dirname, "index.html"),
