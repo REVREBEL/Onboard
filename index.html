@@ -299,7 +299,7 @@
     </nav>
   </main>
 
-  <script type="module">
+<script type="module">
   const gateKey = "revrebel:onboard:index-gate";
   const loginGate = document.getElementById("loginGate");
   const surveyHome = document.getElementById("surveyHome");
@@ -329,15 +329,17 @@
     const inputCode = accessCodeInput.value.trim();
     loginStatus.textContent = "";
 
+    const base = import.meta.env.BASE_URL || "/onboard/";
+    const baseUrl = base.endsWith("/") ? base : `${base}/`;
+
     try {
-      const base = import.meta.env.BASE_URL || "/onboard/";
-      const baseUrl = base.endsWith("/") ? base : `${base}/`;
-      
       const response = await fetch(`${baseUrl}api/verify`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code: inputCode })
       });
+
+      const data = await response.json();
 
       if (data.success) {
         window.sessionStorage.setItem(gateKey, "granted");
