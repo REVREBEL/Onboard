@@ -20,6 +20,11 @@ const flattenHtmlOutput = {
 export default defineConfig(({ mode, isSsrBuild }) => {
   const env = loadEnv(mode, process.cwd(), "VITE_");
   const accessCode = env.VITE_INDEX_ACCESS_CODE || process.env.VITE_INDEX_ACCESS_CODE;
+  const apiBaseUrl =
+    env.VITE_API_BASE_URL ||
+    process.env.VITE_API_BASE_URL ||
+    env.VITE_API_BASE ||
+    process.env.VITE_API_BASE;
 
   if (!accessCode) {
     console.error("\n[Onboard] BUILD CONFIG ERROR");
@@ -28,10 +33,23 @@ export default defineConfig(({ mode, isSsrBuild }) => {
     throw new Error("Missing required environment variable: VITE_INDEX_ACCESS_CODE");
   }
 
+  if (apiBaseUrl) {
+    console.log("[Onboard] VITE_API_BASE_URL detected for this build.");
+  } else {
+    console.warn("[Onboard] VITE_API_BASE_URL is not set; the frontend will fall back to same-origin /api.");
+  }
+
+  const frontendEnvAliases = {
+    // VITE_API_BASE_URL is the canonical deployment variable. Older frontend
+    // modules still read VITE_API_BASE, so map that legacy name at build time.
+    "import.meta.env.VITE_API_BASE": JSON.stringify(apiBaseUrl || "")
+  };
+
   if (isSsrBuild) {
     return {
       root: "./",
       define: {
+        ...frontendEnvAliases,
         "process.env.VITE_INDEX_ACCESS_CODE": JSON.stringify(accessCode)
       },
       build: {
@@ -44,6 +62,7 @@ export default defineConfig(({ mode, isSsrBuild }) => {
 
   return {
     root: ".",
+    define: frontendEnvAliases,
     environments: {
       client: {
         build: {
