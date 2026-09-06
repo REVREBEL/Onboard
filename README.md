@@ -27,10 +27,6 @@
 <br>
 <br>
 
-<p align="right">Onboard, a project by REVREBEL</p>
-
-# ONBOARD
-
 **REVREBEL Onboard** is a TemplateJS-powered client onboarding platform designed to collect, organize, save, and report the information required to launch and support hotel commercial strategy engagements.
 
 The system combines a browser-based TemplateJS application with a Node.js/Express API and PostgreSQL database. Onboarding templates can be assembled dynamically from reusable modules based on the services included in a client's engagement.
