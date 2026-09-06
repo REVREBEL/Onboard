@@ -32,7 +32,7 @@ export default defineConfig(({ mode, isSsrBuild }) => {
 
   if (isSsrBuild) {
     return {
-      root: ".",
+      root: "./",
       build: {
         rollupOptions: {
           input: resolve(__dirname, "src/worker.ts")
