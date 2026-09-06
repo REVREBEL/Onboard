@@ -52,10 +52,10 @@ export default defineConfig(({ mode, isSsrBuild }) => {
           rollupOptions: {
             input: {
               main: resolve(import.meta.dirname, "index.html"),
-              creator: resolve(import.meta.dirname, "srccreator.html"),
-              runner: resolve(import.meta.dirname, "srcrunner.html"),
-              admin: resolve(import.meta.dirname, "srcadmin.html"),
-              stats: resolve(import.meta.dirname, "srcstats.html")
+              creator: resolve(import.meta.dirname, "src/creator.html"),
+              runner: resolve(import.meta.dirname, "src/runner.html"),
+              admin: resolve(import.meta.dirname, "src/admin.html"),
+              stats: resolve(import.meta.dirname, "src/stats.html")
             }
           }
         }
