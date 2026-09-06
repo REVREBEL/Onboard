@@ -43,3 +43,6 @@ api/uploads/
 *.har
 
 AGENT.md
+
+/dist/
+/dist
