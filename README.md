@@ -40,8 +40,6 @@ The application currently supports onboarding workflows for:
 
 <br>
 
----
-
 ## THE PROJECT
 
 REVREBEL Onboard replaces static onboarding forms, spreadsheets, email chains, and disconnected file requests with a structured onboarding application.
@@ -81,7 +79,7 @@ Onboard is designed to:
 10. Give REVREBEL an administrative interface for managing onboarding instances.
 
 <br>
----
+
 
 # ARCHITECTURE
 
@@ -126,7 +124,7 @@ The browser never connects directly to PostgreSQL.
 All database operations are handled by the API.
 
 <br>
----
+
 
 # FRONTEND
 
@@ -155,7 +153,7 @@ No fallback password should be committed to the repository.
 The Vite configuration intentionally fails the build when this environment variable is missing.
 
 <br>
----
+
 
 ### Admin
 
@@ -185,7 +183,7 @@ google_drive_folder_id
 The selected REVREBEL scope determines which onboarding modules are included.
 
 <br>
----
+
 
 ### template Creator
 
@@ -208,7 +206,7 @@ Creator supports:
 - Reusing saved onboarding templates
 
 <br>
----
+
 
 ### template Runner
 
@@ -238,7 +236,7 @@ The token identifies:
 - Onboarding status
 
 <br>
----
+
 
 ### Statistics
 
@@ -255,7 +253,7 @@ Progress is calculated from required TemplateJS questions and can be summarized 
 - template section
 
 <br>
----
+
 
 # FRONTEND TECHNOLOGY
 
@@ -277,7 +275,7 @@ TemplateJS npm dependencies are bundled by Vite during deployment.
 The frontend should therefore be deployed as a Vite application rather than serving the source files directly as an unprocessed static application.
 
 <br>
----
+
 
 # FRONTEND ENVIRONMENT VARIABLES
 
@@ -296,7 +294,7 @@ This should be configured in the deployment environment rather than committed to
 The application does not contain a fallback password.
 
 <br>
----
+
 
 ### VITE_API_BASE_URL
 
@@ -323,7 +321,7 @@ VITE_API_BASE_URL=http://127.0.0.1:4010
 ```
 
 <br>
----
+
 
 # FRONTEND DEVELOPMENT
 
@@ -353,7 +351,7 @@ npm run preview
 ```
 
 <br>
----
+
 
 # BACKEND API
 
@@ -405,7 +403,7 @@ api/src/setup-db.js
 ```
 
 <br>
----
+
 
 # BACKEND TECHNOLOGY
 
@@ -426,7 +424,7 @@ dotenv
 ```
 
 <br>
----
+
 
 # INSTALLATION
 
@@ -452,7 +450,7 @@ npm install
 ```
 
 <br>
----
+
 
 # API ENVIRONMENT
 
@@ -481,7 +479,7 @@ GOOGLE_APPLICATION_CREDENTIALS=
 Only one Google service account credential method is required.
 
 <br>
----
+
 
 ## **DATABASE SETUP**
 
@@ -549,7 +547,7 @@ google_drive_folder_id
 ```
 
 <br>
----
+
 
 ### templates
 
@@ -569,14 +567,14 @@ updated_at
 Each onboarding instance receives its own generated template slug.
 
 <br>
----
+
 
 ### creator_themes
 
 Stores reusable TemplateJS Creator / Runner theme definitions.
 
 <br>
----
+
 
 ### onboarding_instances
 
@@ -596,14 +594,14 @@ draft data
 Tokens allow the Runner to resolve the appropriate onboarding instance without exposing database identifiers.
 
 <br>
----
+
 
 ### responses
 
 Stores submitted TemplateJS response data and optional metadata.
 
 <br>
----
+
 
 # DATABASE SETUP
 
@@ -637,7 +635,7 @@ api/template_modules/
 Saved template templates can also be created later through template Creator.
 
 <br>
----
+
 
 # template MODULES
 
@@ -675,7 +673,7 @@ Questions, panels, rows, and pages can be filtered by scope.
 If no commercial scope is explicitly selected, Revenue is used as the default scope.
 
 <br>
----
+
 
 # ONBOARDING GENERATION
 
@@ -722,7 +720,7 @@ Tokens may also:
 - Resolve to a specific client
 - Resolve to a specific generated template
 
----
+
 
 # API ROUTES
 
@@ -746,7 +744,7 @@ Returns:
 }
 ```
 
----
+
 
 ## templates
 
@@ -763,7 +761,7 @@ Optional:
 ```
 
 <br>
----
+
 
 ### Create or update template
 
@@ -783,7 +781,7 @@ Example:
 ```
 
 <br>
----
+
 
 ### Get template
 
@@ -792,7 +790,7 @@ GET /api/templates/:slug
 ```
 
 <br>
----
+
 
 ### Delete template
 
@@ -801,7 +799,7 @@ DELETE /api/templates/:slug
 ```
 
 <br>
----
+
 
 # RESPONSES
 
@@ -822,7 +820,7 @@ Example:
 ```
 
 <br>
----
+
 
 # THEMES
 
@@ -860,7 +858,7 @@ DELETE /api/themes/:name
 ```
 
 <br>
----
+
 
 # ONBOARDING API
 
@@ -905,7 +903,7 @@ runner_url
 The API generates a unique template and token for the onboarding instance.
 
 <br>
----
+
 
 # ONBOARDING SECURITY
 
@@ -935,7 +933,7 @@ Cache-Control: no-store
 Helmet is enabled for standard security headers.
 
 <br>
-----
+-
 
 # AUTOSAVE AND DRAFTS
 
@@ -959,7 +957,7 @@ PostgreSQL
 
 The Runner can then restore saved response data when the client returns using the same onboarding token.
 
----
+
 
 # PROGRESS CALCULATION
 
@@ -996,7 +994,7 @@ Example:
 ```
 
 <br>
----
+
 
 # GOOGLE DRIVE UPLOADS
 
@@ -1046,7 +1044,7 @@ Maximum files per request: 20
 ```
 
 <br>
----
+
 
 # LOCAL DEVELOPMENT
 
@@ -1061,7 +1059,7 @@ psql "$DATABASE_URL"
 ```
 
 <br>
----
+
 
 ## Start the API
 
@@ -1091,7 +1089,7 @@ Expected:
 ```
 
 <br>
----
+
 
 ## Start the frontend
 
@@ -1104,7 +1102,7 @@ npm run dev
 
 The Vite development server will provide the local frontend URL.
 
----
+
 
 # PRODUCTION ARCHITECTURE
 
@@ -1130,7 +1128,7 @@ The frontend is deployed independently from the API.
 
 The API does not need to be hosted by the same provider as the frontend.
 
----
+
 
 # WEBFLOW CLOUD
 
@@ -1156,7 +1154,7 @@ VITE_API_BASE_URL
 The application should not be switched to raw static source hosting because TemplateJS packages use npm module imports that require Vite bundling.
 
 <br>
----
+
 
 # API PRODUCTION SERVER
 
@@ -1207,7 +1205,7 @@ A reverse proxy can expose the service publicly as:
 https://api.revrebel.io
 ```
 
----
+
 
 # PM2
 
@@ -1238,7 +1236,7 @@ Port 4010
 ```
 
 <br>
----
+
 
 # CORS
 
@@ -1253,7 +1251,7 @@ https://onboard.revrebel.io
 When modifying CORS configuration, avoid exposing credentials or unnecessary origins.
 
 <br>
----
+
 
 # PROJECT TREE
 
@@ -1310,7 +1308,7 @@ onboard-api/
 ```
 
 <br>
----
+
 
 # ONBOARD DATA FLOW
 
@@ -1351,7 +1349,7 @@ Completed response
 ```
 
 <br>
----
+
 
 # template NAMING
 
@@ -1391,7 +1389,7 @@ Not Available
 ```
 
 <br>
----
+
 
 # SECURITY NOTES
 
@@ -1418,7 +1416,7 @@ are injected during the Vite build.
 Backend secrets should never use `VITE_` prefixes and should remain available only to the API process.
 
 <br>
----
+
 
 # GIT
 
@@ -1449,7 +1447,7 @@ git add .
 Review all changes before committing.
 
 <br>
----
+
 
 # DEPENDENCY MANAGEMENT
 
@@ -1472,7 +1470,7 @@ renovate.json
 ```
 
 <br>
----
+
 
 # API HEALTH CHECK
 
@@ -1497,7 +1495,7 @@ curl http://127.0.0.1:4010/api/health
 ```
 
 <br>
----
+
 
 # TROUBLESHOOTING
 
@@ -1508,7 +1506,7 @@ Confirm Webflow is building the project through Vite rather than serving the sou
 Template source files contain npm imports that require bundling.
 
 <br>
----
+
 ## `VITE_INDEX_ACCESS_CODE` error
 
 Ensure:
@@ -1524,7 +1522,7 @@ The Vite configuration intentionally fails closed when the variable is absent.
 The access code itself should never be printed into build logs.
 
 <br>
----
+
 
 ## Frontend cannot reach API
 
@@ -1543,7 +1541,7 @@ curl https://api.revrebel.io/api/health
 Also verify the API's CORS policy permits the frontend origin.
 
 <br>
----
+
 
 ## Database errors
 
@@ -1558,7 +1556,7 @@ and test database connectivity directly.
 Then confirm the `template` schema exists.
 
 <br>
----
+
 
 ## PM2 application not running
 
@@ -1581,7 +1579,7 @@ pm2 restart templatejs-api
 ```
 
 <br>
----
+
 
 # DEPLOYMENT CHECKLIST
 
@@ -1605,7 +1603,7 @@ Before deploying the API:
 - CORS permits the production frontend.
   
 <br>
----
+
 
 # FUTURE REPOSITORY SPLIT
 
@@ -1645,7 +1643,7 @@ api.revrebel.io
 The frontend communicates with the API only through HTTPS, so repository separation does not require changing the underlying application model.
 
 <br>
----
+
 
 # NOTES
 
@@ -1661,7 +1659,7 @@ template templates may be created either:
 Client-specific generated templates are stored separately so later changes to a source template do not unexpectedly alter an onboarding instance already in progress.
 
 <br>
----
+
 
 # SCREENSHOTS
 
@@ -1680,7 +1678,7 @@ File Upload Workflow
 ```
 
 <br>
----
+
 
 # REVREBEL
 
