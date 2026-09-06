@@ -19,7 +19,7 @@ const flattenHtmlOutput = {
 
 export default defineConfig(({ mode, isSsrBuild }) => {
   const env = loadEnv(mode, process.cwd(), "VITE_");
-  const accessCode = env.VITE_INDEX_ACCESS_CODE;
+  const accessCode = env.VITE_INDEX_ACCESS_CODE || process.env.VITE_INDEX_ACCESS_CODE;
 
   if (!accessCode) {
     console.error("\n[Onboard] BUILD CONFIG ERROR");
@@ -41,14 +41,14 @@ export default defineConfig(({ mode, isSsrBuild }) => {
     };
   }
 
-return {
+  return {
     root: ".",
-    define: {
-      "import.meta.env.VITE_INDEX_ACCESS_CODE": JSON.stringify(accessCode),
-      "process.env.VITE_INDEX_ACCESS_CODE": JSON.stringify(accessCode)
-    },
     environments: {
       client: {
+        define: {
+          "import.meta.env.VITE_INDEX_ACCESS_CODE": JSON.stringify(accessCode),
+          "process.env.VITE_INDEX_ACCESS_CODE": JSON.stringify(accessCode)
+        },
         build: {
           outDir: "dist/client",
           emptyOutDir: false,
