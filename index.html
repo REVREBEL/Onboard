@@ -21,6 +21,7 @@
     :root {
       --primary: #163666;
       --primary-inverse: #b2d3de;
+      --primary-fade: color-mix(in srgb, var(--primary) 80%, white 20%);
       --light-1: #fafafa;
       --color-1: #047c97;
       --color-7: #e05047;
@@ -55,7 +56,7 @@
       margin: 0;
       min-height: 100vh;
       padding: clamp(2rem, 5vw, 4rem);
-      background: var(--light-1);
+      background: #eff5f6;
       color: var(--primary);
       font-family: var(--font-base);
     }
@@ -117,7 +118,7 @@
       min-height: 52px;
       border: 2px solid var(--primary);
       border-radius: 0;
-      background: #fff;
+      background: #ffffff;
       color: var(--primary);
       font: inherit;
       padding: 0 0.9rem;
@@ -148,7 +149,7 @@
 
     .login-gate__submit:hover,
     .login-gate__submit:focus-visible {
-      background: var(--color-1);
+      background: var(--primary-fade);
       color: var(--light-1);
       outline: none;
       transform: translateY(-1px);
