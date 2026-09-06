@@ -28,8 +28,6 @@ export default defineConfig(({ mode, isSsrBuild }) => {
     throw new Error("Missing required environment variable: VITE_INDEX_ACCESS_CODE");
   }
 
-  console.log(`[Onboard] VITE_INDEX_ACCESS_CODE detected (length: ${accessCode.length})`);
-
   if (isSsrBuild) {
     return {
       root: "./",
