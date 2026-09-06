@@ -128,9 +128,7 @@ All database operations are handled by the API.
 
 # FRONTEND
 
-The frontend is a Vite application built around TemplateJS.
-
-It provides separate interfaces for administration, template authoring, template completion, and onboarding statistics.
+The frontend is a Vite application built around TemplateJS. It provides separate interfaces for administration, template authoring, template completion, and onboarding statistics.
 
 ## Frontend pages
 
@@ -140,17 +138,13 @@ It provides separate interfaces for administration, template authoring, template
 index.html
 ```
 
-Provides the entry screen and access gate for the internal Onboard application.
-
-The access code is supplied using:
+Provides the entry screen and access gate for the internal Onboard application. The access code is supplied using:
 
 ```text
 VITE_INDEX_ACCESS_CODE
 ```
 
-No fallback password should be committed to the repository.
-
-The Vite configuration intentionally fails the build when this environment variable is missing.
+No fallback password should be committed to the repository. The Vite configuration intentionally fails the build when this environment variable is missing.
 
 <br>
 
@@ -162,11 +156,7 @@ admin.html
 admin.js
 ```
 
-Used to create and manage onboarding instances.
-
-The Admin interface can collect known client information before generating the client onboarding link.
-
-Typical configuration includes:
+Used to create and manage onboarding instances. The Admin interface can collect known client information before generating the client onboarding link. Typical configuration includes:
 
 ```text
 hotel_name
@@ -215,9 +205,7 @@ runner.html
 runner.js
 ```
 
-Displays the onboarding questionnaire to the client.
-
-The runner loads the onboarding configuration using the onboarding token.
+Displays the onboarding questionnaire to the client. The runner loads the onboarding configuration using the onboarding token.
 
 Example:
 
@@ -245,9 +233,7 @@ stats.html
 stats.js
 ```
 
-Provides onboarding progress and response statistics.
-
-Progress is calculated from required TemplateJS questions and can be summarized by both:
+Provides onboarding progress and response statistics. Progress is calculated from required TemplateJS questions and can be summarized by both:
 
 - Overall completion percentage
 - template section
@@ -270,9 +256,7 @@ JavaScript ES Modules
 CSS
 ```
 
-TemplateJS npm dependencies are bundled by Vite during deployment.
-
-The frontend should therefore be deployed as a Vite application rather than serving the source files directly as an unprocessed static application.
+TemplateJS npm dependencies are bundled by Vite during deployment. The frontend should therefore be deployed as a Vite application rather than serving the source files directly as an unprocessed static application.
 
 <br>
 
@@ -289,9 +273,7 @@ Access code used by the internal application entry screen.
 VITE_INDEX_ACCESS_CODE=your-access-code
 ```
 
-This should be configured in the deployment environment rather than committed to GitHub.
-
-The application does not contain a fallback password.
+This should be configured in the deployment environment rather than committed to GitHub. The application does not contain a fallback password.
 
 <br>
 
@@ -355,9 +337,7 @@ npm run preview
 
 # BACKEND API
 
-The backend is a Node.js application built with Express.
-
-It handles:
+The backend is a Node.js application built with Express. It handles:
 
 - template storage
 - template templates
@@ -500,9 +480,7 @@ themes can be added later through the Creator/Admin UI.
 
 # DATABASE
 
-Onboard uses PostgreSQL.
-
-Application tables are stored under the:
+Onboard uses PostgreSQL. Application tables are stored under the:
 
 ```text
 templatejs
@@ -551,9 +529,7 @@ google_drive_folder_id
 
 ### templates
 
-Stores TemplateJS template definitions.
-
-Important fields include:
+Stores TemplateJS template definitions. Important fields include:
 
 ```text
 slug
@@ -624,9 +600,7 @@ Or:
 DATABASE_URL="postgresql://..." npm run db:schema
 ```
 
-No seed data is required for the standard onboarding flow.
-
-Onboard can construct templates directly from the JSON modules stored in:
+No seed data is required for the standard onboarding flow. Onboard can construct templates directly from the JSON modules stored in:
 
 ```text
 api/template_modules/
@@ -711,9 +685,7 @@ Example generated URL:
 runner.html?token=<token>
 ```
 
-Onboarding tokens are generated using cryptographically random bytes.
-
-Tokens may also:
+Onboarding tokens are generated using cryptographically random bytes. Tokens may also:
 
 - Expire
 - Be revoked
@@ -937,9 +909,7 @@ Helmet is enabled for standard security headers.
 
 # AUTOSAVE AND DRAFTS
 
-Onboarding is designed for questionnaires that may take days or weeks to complete.
-
-The Runner can save progress incrementally rather than requiring the client to complete the entire template in one session.
+Onboarding is designed for questionnaires that may take days or weeks to complete. The Runner can save progress incrementally rather than requiring the client to complete the entire template in one session.
 
 The intended flow is:
 
@@ -961,9 +931,7 @@ The Runner can then restore saved response data when the client returns using th
 
 # PROGRESS CALCULATION
 
-Progress is based on required TemplateJS questions.
-
-The API calculates:
+Progress is based on required TemplateJS questions. The API calculates:
 
 ```text
 answered required questions
@@ -998,11 +966,7 @@ Example:
 
 # GOOGLE DRIVE UPLOADS
 
-Onboard can upload client files directly to Google Drive.
-
-The API uses a Google service account and the Google Drive API.
-
-Supported service-account configuration methods are:
+Onboard can upload client files directly to Google Drive. The API uses a Google service account and the Google Drive API. Supported service-account configuration methods are:
 
 ```text
 GOOGLE_SERVICE_ACCOUNT_JSON
@@ -1124,17 +1088,13 @@ Node.js / Express
 PostgreSQL
 ```
 
-The frontend is deployed independently from the API.
-
-The API does not need to be hosted by the same provider as the frontend.
+The frontend is deployed independently from the API. The API does not need to be hosted by the same provider as the frontend.
 
 
 
 # WEBFLOW CLOUD
 
-The frontend is intended to run as a Vite application in Webflow Cloud.
-
-Webflow Cloud should:
+The frontend is intended to run as a Vite application in Webflow Cloud. Webflow Cloud should:
 
 ```text
 install npm dependencies
@@ -1420,9 +1380,7 @@ Backend secrets should never use `VITE_` prefixes and should remain available on
 
 # GIT
 
-Dependencies and generated local files should not be committed.
-
-Typical ignored paths include:
+Dependencies and generated local files should not be committed. Typical ignored paths include:
 
 ```text
 node_modules/
@@ -1459,11 +1417,7 @@ Install dependencies with:
 npm install
 ```
 
-Update packages intentionally and test before production deployment.
-
-Avoid automatically accepting breaking dependency upgrades without reviewing their impact.
-
-Renovate configuration is included in:
+Update packages intentionally and test before production deployment. Avoid automatically accepting breaking dependency upgrades without reviewing their impact. Renovate configuration is included in:
 
 ```text
 renovate.json
@@ -1501,9 +1455,7 @@ curl http://127.0.0.1:4010/api/health
 
 ## Frontend builds but Template does not load
 
-Confirm Webflow is building the project through Vite rather than serving the source tree directly.
-
-Template source files contain npm imports that require bundling.
+Confirm Webflow is building the project through Vite rather than serving the source tree directly. Template source files contain npm imports that require bundling.
 
 <br>
 
@@ -1515,11 +1467,7 @@ Ensure:
 VITE_INDEX_ACCESS_CODE
 ```
 
-exists in the Webflow Cloud environment.
-
-The Vite configuration intentionally fails closed when the variable is absent.
-
-The access code itself should never be printed into build logs.
+exists in the Webflow Cloud environment. The Vite configuration intentionally fails closed when the variable is absent. The access code itself should never be printed into build logs.
 
 <br>
 
@@ -1607,9 +1555,7 @@ Before deploying the API:
 
 # FUTURE REPOSITORY SPLIT
 
-The frontend and API are designed so they can live in separate repositories.
-
-Recommended long-term organization:
+The frontend and API are designed so they can live in separate repositories. Recommended long-term organization:
 
 ```text
 REVREBEL/onboard
@@ -1647,11 +1593,7 @@ The frontend communicates with the API only through HTTPS, so repository separat
 
 # NOTES
 
-Onboard is an internal REVREBEL application and is designed around REVREBEL's commercial strategy onboarding workflow.
-
-The modular template architecture allows onboarding requirements to evolve without requiring one monolithic questionnaire.
-
-template templates may be created either:
+Onboard is an internal REVREBEL application and is designed around REVREBEL's commercial strategy onboarding workflow. The modular template architecture allows onboarding requirements to evolve without requiring one monolithic questionnaire. template templates may be created either:
 
 1. From reusable JSON modules in `api/template_modules/`, or
 2. From previously saved templates stored in PostgreSQL.
@@ -1663,9 +1605,7 @@ Client-specific generated templates are stored separately so later changes to a 
 
 # SCREENSHOTS
 
-Add application screenshots here as the interfaces are finalized.
-
-Recommended screenshots:
+Add application screenshots here as the interfaces are finalized. Recommended screenshots:
 
 ```text
 Onboard Home
