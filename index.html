@@ -300,7 +300,7 @@
 
   <script type="module">
     const gateKey = "revrebel:onboard:index-gate";
-    const requiredAccessCode = import.meta.env.VITE_INDEX_ACCESS_CODE;
+    const requiredAccessCode = import.meta.env./api/verify:
     const loginGate = document.getElementById("loginGate");
     const surveyHome = document.getElementById("surveyHome");
     const loginForm = document.getElementById("loginForm");
@@ -344,6 +344,38 @@
       loginStatus.textContent = "Access code is not valid.";
       accessCodeInput.select();
     });
+
+    const form = document.querySelector("form");
+    const accessCodeInput = document.querySelector('input[type="password"]'); // or your access code input element
+    const errorMessage = document.getElementById("errorMessage"); // or your error message element
+    
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const inputCode = accessCodeInput.value.trim();
+    
+      try {
+        const response = await fetch("/api/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code: inputCode })
+        });
+    
+        const data = await response.json();
+    
+        if (data.success) {
+          // Access granted: hide form or redirect to destination
+          window.location.href = "/creator.html";
+        } else {
+          // Access denied
+          errorMessage.textContent = "Access code is not valid.";
+          errorMessage.hidden = false;
+        }
+      } catch (err) {
+        errorMessage.textContent = "Verification error. Please try again.";
+        errorMessage.hidden = false;
+      }
+    });
+    
   </script>
 </body>
 </html>
