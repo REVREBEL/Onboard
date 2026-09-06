@@ -42,8 +42,6 @@ const resolveApiBase = () => {
 
 const apiBase = resolveApiBase();
 
-const pageOrigin = window.location?.origin?.replace(/\/$/, "") || "";
-
 const onboardingForm = document.getElementById("onboardingForm");
 const createBtn = document.getElementById("createBtn");
 const createStatus = document.getElementById("createStatus");
@@ -119,10 +117,15 @@ const setCreateBusy = (busy) => {
 };
 
 const getRunnerUrl = (token, fallbackUrl = "") => {
-  if (pageOrigin && token) {
-    return `${pageOrigin}runner.html?token=${encodeURIComponent(token)}`;
+  if (!token) return fallbackUrl;
+
+  try {
+    const runnerUrl = new URL("runner.html", window.location.href);
+    runnerUrl.searchParams.set("token", token);
+    return runnerUrl.toString();
+  } catch {
+    return fallbackUrl;
   }
-  return fallbackUrl;
 };
 
 const createPayloadFromForm = () => {
