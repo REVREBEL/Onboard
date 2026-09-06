@@ -46,8 +46,7 @@ export default defineConfig(({ mode, isSsrBuild }) => {
     environments: {
       client: {
         build: {
-          outDir: "dist",
-          emptyOutDir: false,
+          outDir: "dist/client",
           rollupOptions: {
             input: {
               main: resolve(import.meta.dirname, "index.html"),
