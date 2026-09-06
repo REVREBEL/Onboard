@@ -277,7 +277,7 @@ const getStatsUrl = (token, embed = false, bustCache = false) => {
   const params = new URLSearchParams({ token: trimmed });
   if (embed) params.set("embed", "1");
   if (bustCache) params.set("_", String(Date.now()));
-  return `/stats.html?${params.toString()}`;
+  return `stats.html?${params.toString()}`;
 };
 
 const updateStatsLinks = () => {

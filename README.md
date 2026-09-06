@@ -475,7 +475,7 @@ The API expects a Postgres database with the tables in `sql/schema.sql`.
 
 No seed data is required for the default onboarding flow. The app can compose a
 new onboarding template from `api/template_modules/*.json`; saved templates and
-themes can be added later through the Creator/Admin UI.
+themes can be added later through the Creatoradmin UI.
 
 
 # DATABASE

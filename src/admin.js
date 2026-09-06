@@ -120,7 +120,7 @@ const setCreateBusy = (busy) => {
 
 const getRunnerUrl = (token, fallbackUrl = "") => {
   if (pageOrigin && token) {
-    return `${pageOrigin}/runner.html?token=${encodeURIComponent(token)}`;
+    return `${pageOrigin}runner.html?token=${encodeURIComponent(token)}`;
   }
   return fallbackUrl;
 };
