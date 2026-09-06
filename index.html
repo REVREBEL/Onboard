@@ -299,83 +299,57 @@
   </main>
 
   <script type="module">
-    const gateKey = "revrebel:onboard:index-gate";
-    const requiredAccessCode = import.meta.env./api/verify:
-    const loginGate = document.getElementById("loginGate");
-    const surveyHome = document.getElementById("surveyHome");
-    const loginForm = document.getElementById("loginForm");
-    const accessCodeInput = document.getElementById("accessCode");
-    const loginStatus = document.getElementById("loginStatus");
+  const gateKey = "revrebel:onboard:index-gate";
+  const loginGate = document.getElementById("loginGate");
+  const surveyHome = document.getElementById("surveyHome");
+  const loginForm = document.getElementById("loginForm");
+  const accessCodeInput = document.getElementById("accessCode");
+  const loginStatus = document.getElementById("loginStatus");
 
-    if (!requiredAccessCode) {
-      console.error("[Onboard] VITE_INDEX_ACCESS_CODE is not configured. Access gate is disabled until the Webflow environment variable is set.");
-      throw new Error("VITE_INDEX_ACCESS_CODE is not configured.");
-    }
+  const showHome = () => {
+    loginGate.hidden = true;
+    surveyHome.hidden = false;
+  };
 
-    const showHome = () => {
-      loginGate.hidden = true;
-      surveyHome.hidden = false;
-    };
+  const showGate = () => {
+    loginGate.hidden = false;
+    surveyHome.hidden = true;
+    accessCodeInput.focus();
+  };
 
-    const showGate = () => {
-      loginGate.hidden = false;
-      surveyHome.hidden = true;
-      accessCodeInput.focus();
-    };
+  if (window.sessionStorage.getItem(gateKey) === "granted") {
+    showHome();
+  } else {
+    showGate();
+  }
 
-    if (window.sessionStorage.getItem(gateKey) === "granted") {
-      showHome();
-    } else {
-      showGate();
-    }
+  loginForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const inputCode = accessCodeInput.value.trim();
+    loginStatus.textContent = "";
 
-    loginForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const submittedCode = accessCodeInput.value.trim();
+    try {
+      const response = await fetch("/api/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: inputCode })
+      });
 
-      if (submittedCode === requiredAccessCode) {
+      const data = await response.json();
+
+      if (data.success) {
         window.sessionStorage.setItem(gateKey, "granted");
         accessCodeInput.value = "";
-        loginStatus.textContent = "";
         showHome();
-        return;
+      } else {
+        loginStatus.textContent = "Access code is not valid.";
+        accessCodeInput.select();
       }
+    } catch (err) {
+      loginStatus.textContent = "Verification error. Please try again.";
+    }
+  });
+</script>
 
-      loginStatus.textContent = "Access code is not valid.";
-      accessCodeInput.select();
-    });
-
-    const form = document.querySelector("form");
-    const accessCodeInput = document.querySelector('input[type="password"]'); // or your access code input element
-    const errorMessage = document.getElementById("errorMessage"); // or your error message element
-    
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const inputCode = accessCodeInput.value.trim();
-    
-      try {
-        const response = await fetch("/api/verify", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ code: inputCode })
-        });
-    
-        const data = await response.json();
-    
-        if (data.success) {
-          // Access granted: hide form or redirect to destination
-          window.location.href = "/creator.html";
-        } else {
-          // Access denied
-          errorMessage.textContent = "Access code is not valid.";
-          errorMessage.hidden = false;
-        }
-      } catch (err) {
-        errorMessage.textContent = "Verification error. Please try again.";
-        errorMessage.hidden = false;
-      }
-    });
-    
-  </script>
 </body>
 </html>
